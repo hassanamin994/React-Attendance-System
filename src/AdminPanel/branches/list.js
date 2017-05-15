@@ -42,16 +42,20 @@ class Branches extends Component {
 
   deleteBranch(id){
     if (confirm('Are you sure you want to delete this item ?')) {
-        let branches = this.state.branches ;
-        for (var i = 0; i < branches.length; i++) {
-          if(branches[i].id == id ){
-              branches.splice(i, 1)
-              console.log('matched');
-              console.log(branches);
-          }
-        }
-        this.setState({branches: branches})
+      // make ajax to api and in success perform deleteListItem
+      this.deleteListItem(id)
     }
+  }
+  deleteListItem(id){
+    let branches = this.state.branches ;
+    for (var i = 0; i < branches.length; i++) {
+      if(branches[i].id == id ){
+          branches.splice(i, 1)
+          console.log('matched');
+          console.log(branches);
+      }
+    }
+    this.setState({branches: branches})
   }
 }
 
