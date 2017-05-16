@@ -24,6 +24,7 @@ class App extends Component {
                 <li><Link to="/students">Students</Link></li>
                 <li><Link to="/tracks">Tracks</Link></li>
                 <li><Link to="/branches">Branches</Link></li>
+                <li><Link to="/roles">Attendence Roles</Link></li>
               </ul>
             </div>
           </div>
