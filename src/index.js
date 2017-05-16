@@ -7,6 +7,7 @@ import NewTrack from './AdminPanel/tracks/new.js'
 import Branches from './AdminPanel/branches/list.js'
 import NewBranch from './AdminPanel/branches/new.js'
 import { Router, Route, browserHistory } from 'react-router'
+import Students from './AdminPanel/students/list'
 
 let routes = (
   <Router history={browserHistory} >
@@ -26,5 +27,6 @@ let routes = (
   </Router>
 )
 ReactDOM.render(
-  routes
-, document.getElementById('root'))
+  routes,
+  document.getElementById('root')
+);
