@@ -42,7 +42,7 @@ class Students extends Component {
             {students}
           </tbody>
         </table>
-        {this.props.children}
+        { this.props.children?  React.cloneElement(this.props.children, { addStudent: this.addStudent }): "" }
       </div>
     );
   }
@@ -63,6 +63,12 @@ class Students extends Component {
       }
     }
     this.setState({students: students})
+  }
+  addStudent(student){
+      console.log(student);
+      let students = this.state.students ;
+      students.push(student)
+      this.setState({students: students})
   }
 }
 
