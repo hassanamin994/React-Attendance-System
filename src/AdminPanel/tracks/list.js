@@ -5,6 +5,7 @@ class Tracks extends Component {
   constructor(props){
     super(props)
     this.deleteTrack = this.deleteTrack.bind(this)
+    this.addTrack = this.addTrack.bind(this)
     this.deleteListItem = this.deleteListItem.bind(this)
     this.state = {  tracks: [{
         id: '1',
@@ -24,6 +25,8 @@ class Tracks extends Component {
   render() {
 
     let tracks = this.state.tracks.map((track) => {return <TrackItem key={track.id} deleteTrack={this.deleteTrack} track={track} />} )
+    // let childs = React.cloneElement(this.props.children, { appState: this.state });
+
     return (
       <div className="tracks">
       <h2> Tracks </h2>
@@ -39,7 +42,7 @@ class Tracks extends Component {
           {tracks}
         </tbody>
       </table>
-      { this.props.children }
+      { this.props.children?  React.cloneElement(this.props.children, { addTrack: this.addTrack }): "" }
       </div>
     );
 
@@ -61,6 +64,12 @@ class Tracks extends Component {
       }
     }
     this.setState({tracks: tracks})
+  }
+  addTrack(track){
+      console.log(track);
+      let tracks = this.state.tracks ;
+      tracks.push(track)
+      this.setState({tracks: tracks})
   }
 }
 

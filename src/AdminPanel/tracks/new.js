@@ -30,24 +30,28 @@ class NewTrack extends Component {
    let selectOptions = this.state.branches.map(branch => <option value={branch.id} >{branch.name} / { branch.city }</option> )
 
     return (
-      <form onSubmit={this.handleFormSubmit} >
+      <form className="form-horizontal" onSubmit={this.handleFormSubmit} >
        <h2> Add Track </h2>
-        <div class='form-group'>
-          <label for="name">Track Name </label>
-          <input type="text" id="branch-name"  ref="name"  />
+        <div className='form-group'>
+          <label for="name" className="col-xs-2" >Track Name </label>
+          <div className="col-xs-10">
+            <input type="text" id="branch-name" className="form-control"  ref="name"  />
+          </div>
         </div>
-        <div class='form-group'>
-          <label for="name">Branch </label>
-          <select ref="branch">
-            { selectOptions }
-          </select>
+        <div className='form-group'>
+          <label for="name" className="col-xs-2" >Branch </label>
+          <div className="col-xs-10">
+            <select className="form-control"  ref="branch">
+              { selectOptions }
+            </select>
+          </div>
         </div>
-        <div class="error" hidden={this.state.errors.length == 0 }>
+        <div className="error" hidden={this.state.errors.length == 0 }>
           <ul>
             { this.state.errors.map(error=> <li> {error} </li> )}
           </ul>
         </div>
-        <input type="submit" value="Add" />
+        <input className="btn btn-success" type="submit" value="Add" />
       </form>
     );
   }
@@ -55,11 +59,13 @@ class NewTrack extends Component {
   handleFormSubmit(e){
     e.preventDefault();
     // if form valid, submit it
-    let errors = []
-    if(!this.refs.name.value.trim()){
+    let errors = [];
+    let name = this.refs.name.value.trim();
+    let branch = this.refs.branch.value.trim();
+    if(!name){
       errors.push('Please fill the Name field')
     }
-    if(!this.refs.branch.value.trim()){ // else prompt for an error
+    if(!branch){ // else prompt for an error
       errors.push('Please fill the Branch field')
     }
     if(errors.length > 0 )
@@ -67,6 +73,8 @@ class NewTrack extends Component {
     else {
       // push to the API
       console.log('form is valid');
+      // in callback, get the new track id and branch name then push to the parent
+      this.props.addTrack({id: Math.random() * 100, name: name, branch: branch})
     }
 
   }
