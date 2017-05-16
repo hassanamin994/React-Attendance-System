@@ -5,6 +5,7 @@ class Students extends Component {
   constructor(props){
     super(props)
     this.deleteStudent = this.deleteStudent.bind(this)
+    this.addStudent = this.addStudent.bind(this)
     this.state = {  students: [{
         id: '1',
         name:'hassan',

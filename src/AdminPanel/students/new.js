@@ -92,7 +92,7 @@ class NewStudent extends Component {
       // push to the API
       console.log('form is valid');
       // in callback, get the new track id and branch name then push to the parent
-      this.props.addStudent({name: name, track: track})
+      this.props.addStudent({id: Math.random()* 100, name: name, email: email, track: track})
     }
 
   }
