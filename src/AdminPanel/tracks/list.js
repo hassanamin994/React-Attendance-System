@@ -8,20 +8,26 @@ class Tracks extends Component {
     this.deleteTrack = this.deleteTrack.bind(this)
     this.addTrack = this.addTrack.bind(this)
     this.deleteListItem = this.deleteListItem.bind(this)
-    this.state = {  tracks: [{
-        id: '1',
-        name:'open source',
-        branch: 'nasr city'
-      },{
-        id: '2',
-        name:'cyber security ',
-        branch: 'mansoura'
-      },{
-        id: '3',
-        name:'Java',
-        branch: 'Smart Village'
-      },
-    ]}
+    this.state = {  tracks: []}
+  }
+  componentDidMount(){
+    let tracks = [
+      {
+          id: '1',
+          name:'open source',
+          branch: 'nasr city'
+        },{
+          id: '2',
+          name:'cyber security ',
+          branch: 'mansoura'
+        },{
+          id: '3',
+          name:'Java',
+          branch: 'Smart Village'
+        }
+
+    ];
+    this.setState({tracks: tracks})
   }
   render() {
 

@@ -7,23 +7,29 @@ class Students extends Component {
     super(props)
     this.deleteStudent = this.deleteStudent.bind(this)
     this.addStudent = this.addStudent.bind(this)
-    this.state = {  students: [{
-        id: '1',
-        name:'hassan',
-        email: 'hassan@hassan.com',
-        track: 'open source'
-      },{
-        id: '2',
-        name:'habib',
-        email: 'habib@habib.com',
-        track: 'open source'
-      },{
-        id: '3',
-        name:'kazafy',
-        email: 'kazafy@kazafy.com',
-        track: 'open source'
-      },
-    ]}
+    this.state = {  students: []}
+  }
+  componentDidMount(){
+    let students = [
+      {
+          id: '1',
+          name:'hassan',
+          email: 'hassan@hassan.com',
+          track: 'open source'
+        },{
+          id: '2',
+          name:'habib',
+          email: 'habib@habib.com',
+          track: 'open source'
+        },{
+          id: '3',
+          name:'kazafy',
+          email: 'kazafy@kazafy.com',
+          track: 'open source'
+        },
+
+    ]
+    this.setState({students: students})
   }
   render() {
 

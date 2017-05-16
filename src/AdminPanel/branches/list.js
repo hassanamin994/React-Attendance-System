@@ -5,20 +5,25 @@ class Branches extends Component {
   constructor(props){
     super(props)
     this.deleteBranch = this.deleteBranch.bind(this)
-    this.state = {  branches: [{
-        id: '1',
-        name:'nasr city',
-        city: 'Cairo'
-      },{
-        id: '2',
-        name:'Mansoura ',
-        city: 'mansoura'
-      },{
-        id: '3',
-        name:'smart village',
-        city: 'Cairo'
-      },
-    ]}
+    this.state = {  branches: []}
+  }
+  componentDidMount(){
+    let branches = [
+      {
+          id: '1',
+          name:'nasr city',
+          city: 'Cairo'
+        },{
+          id: '2',
+          name:'Mansoura ',
+          city: 'mansoura'
+        },{
+          id: '3',
+          name:'smart village',
+          city: 'Cairo'
+        },
+    ]
+    this.setState({branches: branches})
   }
   render() {
 
