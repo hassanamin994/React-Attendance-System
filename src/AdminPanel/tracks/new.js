@@ -31,6 +31,7 @@ class NewTrack extends Component {
 
     return (
       <form onSubmit={this.handleFormSubmit} >
+       <h2> Add Track </h2>
         <div class='form-group'>
           <label for="name">Track Name </label>
           <input type="text" id="branch-name"  ref="name"  />

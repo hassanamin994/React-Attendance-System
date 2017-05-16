@@ -10,6 +10,7 @@ class NewBranch extends Component {
   render() {
     return (
       <form onSubmit={this.handleFormSubmit} >
+        <h2> Add Branch </h2> 
         <div class='form-group'>
           <label for="name">Branch Name </label>
           <input type="text" id="branch-name"  ref="name"  />

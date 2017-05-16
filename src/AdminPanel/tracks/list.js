@@ -25,6 +25,7 @@ class Tracks extends Component {
 
     let tracks = this.state.tracks.map((track) => {return <TrackItem key={track.id} deleteTrack={this.deleteTrack} track={track} />} )
     return (
+      <div class="tracks">
       <table className="table">
         <thead>
           <tr>
@@ -37,6 +38,8 @@ class Tracks extends Component {
           {tracks}
         </tbody>
       </table>
+      { this.props.children }
+      </div>
     );
 
   }
