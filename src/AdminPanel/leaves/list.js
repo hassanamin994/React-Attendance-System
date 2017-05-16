@@ -44,7 +44,6 @@ class Leaves extends Component {
     return (
       <div className="leaves">
         <h2> Leaves </h2>
-          <Link className="btn btn-primary pull-right" to="/tracks/new">New Track</Link>
         <table className="table text-left" >
           <thead>
             <tr>
