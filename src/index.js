@@ -9,6 +9,7 @@ import NewBranch from './AdminPanel/branches/new.js'
 import { Router, Route, browserHistory } from 'react-router'
 import Students from './AdminPanel/students/list'
 import NewStudent from './AdminPanel/students/new'
+import Leaves from './AdminPanel/leaves/list'
 
 let routes = (
   <Router history={browserHistory} >
@@ -22,9 +23,12 @@ let routes = (
           <Route path="/branches" component={Branches} >
             <Route path="new" component={NewBranch} />
           </Route>
+
           <Route path="/students" component={Students} >
             <Route path="new" component={NewStudent} />
           </Route>
+
+          <Route path="/leaves" component={Leaves} />
 
     </Route>
   </Router>
