@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import BranchItem from './branchItem'
+import {Link} from 'react-router'
 class Branches extends Component {
 
   constructor(props){
     super(props)
     this.deleteBranch = this.deleteBranch.bind(this)
+    this.addBranch = this.addBranch.bind(this)
     this.state = {  branches: []}
   }
   componentDidMount(){
     let branches = [
-      {
+        {
           id: '1',
           name:'nasr city',
           city: 'Cairo'
@@ -29,9 +31,11 @@ class Branches extends Component {
 
 
     let branches = this.state.branches.map((branch) => {return <BranchItem key={branch.id} deleteBranch={this.deleteBranch} branch={branch} />} )
+
     return (
       <div className="branches">
         <h2>Branches </h2>
+        <Link to="/branches/new" className="btn btn-primary pull-right">Add Branch </Link>
         <table className="table text-left">
           <thead>
             <tr>
@@ -44,9 +48,15 @@ class Branches extends Component {
             {branches}
           </tbody>
         </table>
-        { this.props.children }
+        { this.props.children ? React.cloneElement(this.props.children, {addBranch: this.addBranch }): ""}
       </div>
     );
+  }
+
+  addBranch(branch){
+    let branches = this.state.branches;
+    branches.push(branch)
+    this.setState({branches: branches})
   }
 
   deleteBranch(id){
