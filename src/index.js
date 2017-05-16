@@ -11,6 +11,7 @@ import Students from './AdminPanel/students/list'
 import NewStudent from './AdminPanel/students/new'
 import Roles from './AdminPanel/attendance_roles/list'
 import NewRole from './AdminPanel/attendance_roles/new'
+import Leaves from './AdminPanel/leaves/list'
 
 let routes = (
   <Router history={browserHistory} >
@@ -24,12 +25,15 @@ let routes = (
           <Route path="/branches" component={Branches} >
             <Route path="new" component={NewBranch} />
           </Route>
+
           <Route path="/students" component={Students} >
             <Route path="new" component={NewStudent} />
           </Route>
           <Route path="/roles" component={Roles} >
             <Route path="new" component={NewRole} />
           </Route>
+
+          <Route path="/leaves" component={Leaves} />
 
     </Route>
   </Router>

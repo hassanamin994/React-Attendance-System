@@ -25,6 +25,10 @@ class App extends Component {
                 <li><Link to="/tracks">Tracks</Link></li>
                 <li><Link to="/branches">Branches</Link></li>
                 <li><Link to="/roles">Attendence Roles</Link></li>
+                <li><Link to="/students" activeStyle={ {color: 'white' }} >Students</Link></li>
+                <li><Link to="/tracks" activeStyle={ {color: 'white' }} >Tracks</Link></li>
+                <li><Link to="/branches" activeStyle={ {color: 'white' }} >Branches</Link></li>
+                <li><Link to="/leaves" activeStyle={ {color: 'white' }} >Leaves</Link></li>
               </ul>
             </div>
           </div>
