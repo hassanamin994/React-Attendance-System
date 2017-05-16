@@ -32,25 +32,25 @@ class NewStudent extends Component {
         <div className='form-group'>
           <label className="col-xs-2" for="name"> Name </label>
           <div className="col-xs-10">
-            <input type="text" id="name"  ref="name"  />
+            <input className="form-control" type="text" id="name"  ref="name"  />
           </div>
         </div>
         <div className='form-group'>
           <label className="col-xs-2" for="name"> Email </label>
           <div className="col-xs-10">
-            <input type="text" id="email" ref="email" />
+            <input className="form-control" type="text" id="email" ref="email" />
           </div>
         </div>
         <div className='form-group'>
           <label className="col-xs-2" for="password"> Password </label>
           <div className="col-xs-10">
-            <input type="password" id="password" ref="password" />
+            <input className="form-control" type="password" id="password" ref="password" />
           </div>
         </div>
         <div className='form-group'>
           <label for="track" className="col-xs-2"> Track </label>
           <div className="col-xs-10">
-            <select id="track" className="form-control"  ref="track">
+            <select className="form-control" id="track" className="form-control"  ref="track">
               { tracksOptions }
             </select>
           </div>
