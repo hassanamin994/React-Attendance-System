@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Student from './student'
+import {Link} from 'react-router'
 class Students extends Component {
 
   constructor(props){
@@ -30,6 +31,7 @@ class Students extends Component {
     return (
       <div className="students">
       <h2> Students </h2>
+      <Link className="btn btn-primary pull-right" to="/students/new">Add Student</Link>
         <table className="table text-left">
           <thead>
             <tr>

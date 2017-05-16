@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TrackItem from './trackItem'
+import {Link} from 'react-router'
 class Tracks extends Component {
 
   constructor(props){
@@ -29,20 +30,21 @@ class Tracks extends Component {
 
     return (
       <div className="tracks">
-      <h2> Tracks </h2>
-      <table className="table text-left" >
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Branch</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tracks}
-        </tbody>
-      </table>
-      { this.props.children?  React.cloneElement(this.props.children, { addTrack: this.addTrack }): "" }
+        <h2> Tracks </h2>
+          <Link className="btn btn-primary pull-right" to="/tracks/new">New Track</Link>
+        <table className="table text-left" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Branch</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tracks}
+          </tbody>
+        </table>
+        { this.props.children?  React.cloneElement(this.props.children, { addTrack: this.addTrack }): "" }
       </div>
     );
 
