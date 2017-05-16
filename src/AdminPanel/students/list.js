@@ -27,18 +27,23 @@ class Students extends Component {
 
     let students = this.state.students.map((student) => {return <Student key={student.id} deleteStudent={this.deleteStudent} student={student} />} )
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Track</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students}
-        </tbody>
-      </table>
+      <div className="students">
+      <h2> Students </h2>
+        <table className="table text-left">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Track</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students}
+          </tbody>
+        </table>
+        {this.props.children}
+      </div>
     );
   }
 

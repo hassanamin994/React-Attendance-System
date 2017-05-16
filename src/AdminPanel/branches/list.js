@@ -25,18 +25,22 @@ class Branches extends Component {
 
     let branches = this.state.branches.map((branch) => {return <BranchItem key={branch.id} deleteBranch={this.deleteBranch} branch={branch} />} )
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>City</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {branches}
-        </tbody>
-      </table>
+      <div className="branches">
+        <h2>Branches </h2>
+        <table className="table text-left">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>City</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {branches}
+          </tbody>
+        </table>
+        { this.props.children }
+      </div>
     );
   }
 

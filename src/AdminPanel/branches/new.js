@@ -10,16 +10,16 @@ class NewBranch extends Component {
   render() {
     return (
       <form onSubmit={this.handleFormSubmit} >
-        <h2> Add Branch </h2> 
-        <div class='form-group'>
+        <h2> Add Branch </h2>
+        <div className='form-group'>
           <label for="name">Branch Name </label>
           <input type="text" id="branch-name"  ref="name"  />
         </div>
-        <div class='form-group'>
+        <div className='form-group'>
           <label for="name">Branch Location </label>
           <input type="text" id="branch-location" ref="location" />
         </div>
-        <div class="error" hidden={this.state.errors.length == 0 }>
+        <div className="error" hidden={this.state.errors.length == 0 }>
           <ul>
             { this.state.errors.map(error=> <li> {error} </li> )}
           </ul>

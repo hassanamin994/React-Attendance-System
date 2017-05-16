@@ -25,8 +25,9 @@ class Tracks extends Component {
 
     let tracks = this.state.tracks.map((track) => {return <TrackItem key={track.id} deleteTrack={this.deleteTrack} track={track} />} )
     return (
-      <div class="tracks">
-      <table className="table">
+      <div className="tracks">
+      <h2> Tracks </h2>
+      <table className="table text-left" >
         <thead>
           <tr>
             <th>Name</th>
