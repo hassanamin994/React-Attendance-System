@@ -22,6 +22,7 @@ class Branches extends Component {
       url: this.apiRoutes.get_branches_route(),
       method: "GET",
       success: function(data){
+        // console.log(data);
         _this.setState({branches: data})
       },
       error: function(err){
@@ -33,7 +34,7 @@ class Branches extends Component {
 
 
     let branches = this.state.branches.map((branch) => {return <BranchItem key={branch.id} deleteBranch={this.deleteBranch} branch={branch} />} )
-
+    console.log(this.state.branches);
     return (
       <div className="branches">
         <h2>Branches </h2>
@@ -48,7 +49,7 @@ class Branches extends Component {
             </tr>
           </thead>
           <tbody>
-            {branches}
+            {this.state.branches.map((branch) => {return <BranchItem key={branch.id} deleteBranch={this.deleteBranch} branch={branch} />} )}
           </tbody>
         </table>
         { this.props.children ? React.cloneElement(this.props.children, {addBranch: this.addBranch , editBranch: this.editBranch }): ""}
@@ -61,7 +62,7 @@ class Branches extends Component {
     $.ajax({
       url: this.apiRoutes.get_branches_route(),
       method: 'POST',
-      data: {name: branch.name},
+      data: {name: branch.name, city: branch.city},
       success: function(resp){
             // self.addBranchItem(branch)
             console.log('added');
@@ -98,7 +99,7 @@ class Branches extends Component {
   deleteBranch(id){
     if (confirm('Are you sure you want to delete this item ?')) {
       // make ajax to api and in success perform deleteListItem
-        var _this = this; 
+        var _this = this;
         $.ajax({
           url: this.apiRoutes.get_branches_route()+"/"+id,
           method: 'DELETE',

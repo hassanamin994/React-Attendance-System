@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import Tracks from './AdminPanel/tracks/list.js'
 import NewTrack from './AdminPanel/tracks/new.js'
+import EditTrack from './AdminPanel/tracks/edit.js'
 import Branches from './AdminPanel/branches/list.js'
 import NewBranch from './AdminPanel/branches/new.js'
 import EditBranch from './AdminPanel/branches/edit.js'
@@ -20,6 +21,7 @@ let routes = (
 
           <Route path="/tracks" component={Tracks} >
             <Route path="new" component={NewTrack} />
+            <Route path="edit/:id" component={EditTrack} />
 
           </Route>
 

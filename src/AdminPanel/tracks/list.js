@@ -10,7 +10,10 @@ class Tracks extends Component {
     super(props)
     this.deleteTrack = this.deleteTrack.bind(this)
     this.addTrack = this.addTrack.bind(this)
+    this.editTrack = this.editTrack.bind(this)
+    this.editTrackItem = this.editTrackItem.bind(this)
     this.deleteListItem = this.deleteListItem.bind(this)
+    this.refreshTracks = this.refreshTracks.bind(this)
     this.state = {  tracks: []}
     this.apiRoutes = new ApiRoutes()
 
@@ -66,7 +69,7 @@ class Tracks extends Component {
             {tracks}
           </tbody>
         </table>
-        { this.props.children?  React.cloneElement(this.props.children, { addTrack: this.addTrack }): "" }
+        { this.props.children?  React.cloneElement(this.props.children, { addTrack: this.addTrack, editTrack: this.editTrack }): "" }
       </div>
     );
 
@@ -116,11 +119,50 @@ class Tracks extends Component {
       }
     })
   }
+  refreshTracks(){
+    var _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_tracks_route(),
+      method: "GET",
+      success: function(data){
+        _this.setState({tracks: data})
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
+  }
   addTrackItem(track){
     console.log(track);
     let tracks = this.state.tracks ;
     tracks.push(track)
     this.setState({tracks: tracks})
+  }
+  editTrack(track){
+    let  _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_tracks_route()+"/"+track.id,
+      method: 'PUT',
+      data: {id: track.id, name: track.name, branch_id: track.branch },
+      success: function(resp){
+        // _this.editTrackItem(track) // get track from api and send to this function
+        _this.refreshTracks()
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
+  }
+  editTrackItem(track){
+    console.log(track.branch);
+    let tracks = this.state.tracks;
+    for (var i = 0; i < tracks.length; i++) {
+      if(tracks[i].id == track.id){
+        tracks[i].branch.name = track.branch;
+        tracks[i].name = track.name;
+      }
+    }
+    this.setState({tracks: tracks});
   }
 }
 
