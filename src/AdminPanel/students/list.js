@@ -81,6 +81,7 @@ class Students extends Component {
         url: this.apiRoutes.get_students_route()+"/"+id,
         method: 'DELETE',
         success: function(resp){
+          console.log(resp);
           _this.deleteListItem(id)
         },
         error: function(err){
@@ -109,7 +110,7 @@ class Students extends Component {
       success: function(data){
         console.log(data);
         // after return from api the current object, add to the list
-        // _this.addStudentItem(student);
+        _this.addStudentItem(data);
       },
       error: function(err){
         console.log(err);
