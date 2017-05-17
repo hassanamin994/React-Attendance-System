@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router'
 class BranchItem extends Component {
   constructor(props){
     super(props)
@@ -10,7 +10,8 @@ class BranchItem extends Component {
       <tr>
         <td>{this.props.branch.name}</td>
         <td>{this.props.branch.city}</td>
-        <td><a onClick={this.deleteBranch} className="btn btn-danger btn-xs" href="#">Delete</a> <a href="#" className="btn btn-primary btn-xs">Edit</a></td>
+        <td>{this.props.branch.tracks}</td>
+        <td><a onClick={this.deleteBranch} className="btn btn-danger btn-xs" href="#">Delete</a> <Link to={"/branches/edit/"+ this.props.branch.id} className="btn btn-primary btn-xs">Edit</Link></td>
       </tr>
     );
   }

@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
 import BranchItem from './branchItem'
 import {Link} from 'react-router'
+import $ from 'jquery'
+import ApiRoutes from '../api_routes'
+
+
 class Branches extends Component {
 
   constructor(props){
     super(props)
     this.deleteBranch = this.deleteBranch.bind(this)
     this.addBranch = this.addBranch.bind(this)
+    this.addBranchItem = this.addBranchItem.bind(this)
+    this.editListItem = this.editListItem.bind(this)
     this.state = {  branches: []}
+    this.apiRoutes = new ApiRoutes()
   }
   componentDidMount(){
-    let branches = [
-        {
-          id: '1',
-          name:'nasr city',
-          city: 'Cairo'
-        },{
-          id: '2',
-          name:'Mansoura ',
-          city: 'mansoura'
-        },{
-          id: '3',
-          name:'smart village',
-          city: 'Cairo'
-        },
-    ]
-    this.setState({branches: branches})
+    var _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_branches_route(),
+      method: "GET",
+      success: function(data){
+        _this.setState({branches: data})
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
   render() {
 
@@ -41,6 +43,7 @@ class Branches extends Component {
             <tr>
               <th>Name</th>
               <th>City</th>
+              <th>Tracks</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -48,21 +51,65 @@ class Branches extends Component {
             {branches}
           </tbody>
         </table>
-        { this.props.children ? React.cloneElement(this.props.children, {addBranch: this.addBranch }): ""}
+        { this.props.children ? React.cloneElement(this.props.children, {addBranch: this.addBranch , editBranch: this.editBranch }): ""}
       </div>
     );
   }
 
   addBranch(branch){
+    console.log(branch);
+    $.ajax({
+      url: this.apiRoutes.get_branches_route(),
+      method: 'POST',
+      data: {name: branch.name},
+      success: function(resp){
+            // self.addBranchItem(branch)
+            console.log('added');
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
+  }
+  addBranchItem(branch){
     let branches = this.state.branches;
     branches.push(branch)
+    this.setState({branches: branches})
+  }
+
+  editBranch(branch){
+    // send ajax with the edits
+
+    // in callback set the new branch data to state
+    this.editListItem(branch)
+  }
+
+  editListItem(branch){
+    let branches = this.state.branches;
+    for (var i = 0; i < branches.length; i++) {
+      if(branches[i].id == branch.id){
+        branches[i] = branch
+        console.log('matched');
+      }
+    }
     this.setState({branches: branches})
   }
 
   deleteBranch(id){
     if (confirm('Are you sure you want to delete this item ?')) {
       // make ajax to api and in success perform deleteListItem
-      this.deleteListItem(id)
+        var _this = this; 
+        $.ajax({
+          url: this.apiRoutes.get_branches_route()+"/"+id,
+          method: 'DELETE',
+          success: function(resp){
+            console.log(resp);
+            _this.deleteListItem(id)
+          },
+          error: function(err){
+            console.log(err);
+          }
+        })
     }
   }
   deleteListItem(id){
