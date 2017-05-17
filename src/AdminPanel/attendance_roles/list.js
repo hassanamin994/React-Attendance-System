@@ -5,6 +5,7 @@ class Roles extends Component {
 
   constructor(props){
     super(props)
+    this.deleteRole = this.deleteRole.bind(this)
     this.addRole = this.addRole.bind(this)
     this.state = {  roles: [{
         id: '1',
@@ -22,10 +23,7 @@ class Roles extends Component {
     ]}
   }
   render() {
-
-    let roles = this.state.roles.map((role) => {return <Role key={role.id}  role={role} />} )
-    // let childs = React.cloneElement(this.props.children, { appState: this.state });
-
+    let roles = this.state.roles.map((role) => {return <Role key={role.id} deleteRole={this.deleteRole} role={role} />} )
     return (
       <div className="roles">
         <h2> Roles </h2>
@@ -46,6 +44,24 @@ class Roles extends Component {
       </div>
     );
 
+  }
+
+  deleteRole(id){
+    if (confirm('Are you sure you want to delete this item ?')) {
+      // make ajax to api and in success perform deleteListItem
+      this.deleteListItem(id)
+    }
+  }
+  deleteListItem(id){
+    let roles = this.state.roles ;
+    for (var i = 0; i < roles.length; i++) {
+      if(roles[i].id == id ){
+          roles.splice(i, 1)
+          console.log('matched');
+          console.log(roles);
+      }
+    }
+    this.setState({roles: roles})
   }
 
 

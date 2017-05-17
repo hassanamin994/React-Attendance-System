@@ -40,11 +40,11 @@ class NewRole extends Component {
     // if form valid, submit it
     let errors = [];
     let name = this.refs.name.value.trim();
-    let branch = this.refs.weight.value.trim();
+    let weight = this.refs.weight.value.trim();
     if(!name){
       errors.push('Please fill the Name field')
     }
-    if(!branch){ // else prompt for an error
+    if(!weight){ // else prompt for an error
       errors.push('Please fill the Weight field')
     }
     if(errors.length > 0 )
@@ -52,7 +52,7 @@ class NewRole extends Component {
     else {
       // push to the API
       console.log('form is valid');
-
+      this.props.addRole({id: Math.random()*100, name: name, weight: weight})
     }
 
   }
