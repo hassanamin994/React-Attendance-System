@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Student from './student'
 import {Link} from 'react-router'
+import ApiRoutes from '../api_routes'
+import $ from 'jquery'
+
 class Students extends Component {
 
   constructor(props){
@@ -8,28 +11,42 @@ class Students extends Component {
     this.deleteStudent = this.deleteStudent.bind(this)
     this.addStudent = this.addStudent.bind(this)
     this.state = {  students: []}
+    this.apiRoutes = new ApiRoutes()
   }
   componentDidMount(){
-    let students = [
-      {
-          id: '1',
-          name:'hassan',
-          email: 'hassan@hassan.com',
-          track: 'open source'
-        },{
-          id: '2',
-          name:'habib',
-          email: 'habib@habib.com',
-          track: 'open source'
-        },{
-          id: '3',
-          name:'kazafy',
-          email: 'kazafy@kazafy.com',
-          track: 'open source'
-        },
-
-    ]
-    this.setState({students: students})
+    // let students = [
+    //   {
+    //       id: '1',
+    //       name:'hassan',
+    //       email: 'hassan@hassan.com',
+    //       track: 'open source'
+    //     },{
+    //       id: '2',
+    //       name:'habib',
+    //       email: 'habib@habib.com',
+    //       track: 'open source'
+    //     },{
+    //       id: '3',
+    //       name:'kazafy',
+    //       email: 'kazafy@kazafy.com',
+    //       track: 'open source'
+    //     },
+    //
+    // ]
+    var _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_students_route(),
+      method: "GET",
+      success: function(data){
+        console.log(data);
+        // _this.setState({tracks: data})
+        _this.setState({students: data})
+        // console.log(data);
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
   render() {
 
@@ -42,7 +59,7 @@ class Students extends Component {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
+              <th>Type</th>
               <th>Track</th>
               <th>Actions</th>
             </tr>
@@ -59,7 +76,17 @@ class Students extends Component {
   deleteStudent(id){
     if (confirm('Are you sure you want to delete this item ?')) {
       // make ajax to api and in success perform deleteListItem
-      this.deleteListItem(id)
+      var _this = this;
+      $.ajax({
+        url: this.apiRoutes.get_students_route()+"/"+id,
+        method: 'DELETE',
+        success: function(resp){
+          _this.deleteListItem(id)
+        },
+        error: function(err){
+          console.log(err);
+        }
+      })
     }
   }
   deleteListItem(id){
@@ -74,10 +101,27 @@ class Students extends Component {
     this.setState({students: students})
   }
   addStudent(student){
-      console.log(student);
-      let students = this.state.students ;
-      students.push(student)
-      this.setState({students: students})
+    var _this = this
+    $.ajax({
+      url: this.apiRoutes.get_students_route(),
+      method: 'POST',
+      data: student,
+      success: function(data){
+        console.log(data);
+        // after return from api the current object, add to the list
+        // _this.addStudentItem(student);
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
+  }
+
+  addStudentItem(student){
+    // console.log(student);
+    let students = this.state.students ;
+    students.push(student)
+    this.setState({students: students})
   }
 }
 

@@ -5,5 +5,8 @@ export default class ApiRoutes {
   get_tracks_route(){
     return 'http://attendance-ionic-symfony-react.herokuapp.com/tracks'
   }
+  get_students_route(){
+    return 'http://attendance-ionic-symfony-react.herokuapp.com/users'
+  }
 
 }

@@ -9,8 +9,8 @@ class Student extends Component {
     return (
       <tr>
         <td>{this.props.student.name}</td>
-        <td>{this.props.student.email}</td>
-        <td>{this.props.student.track}</td>
+        <td>{this.props.student.type == 1? "Student": "Admin"}</td>
+        <td>{this.props.student.track.name}</td>
         <td><a onClick={this.deleteStudent} className="btn btn-danger btn-xs" href="#">Delete</a> <a href="#" className="btn btn-primary btn-xs">Edit</a></td>
       </tr>
     );
