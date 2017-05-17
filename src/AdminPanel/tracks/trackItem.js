@@ -9,7 +9,7 @@ class TrackItem extends Component {
     return (
       <tr>
         <td>{this.props.track.name}</td>
-        <td>{this.props.track.branch}</td>
+        <td>{this.props.track.branch.name}</td>
         <td><a onClick={this.deleteTrack} href="#" className="btn btn-danger btn-xs">Delete</a> <a href="#" className="btn btn-primary btn-xs" >Edit</a></td>
       </tr>
     );

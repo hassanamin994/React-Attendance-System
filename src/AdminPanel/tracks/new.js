@@ -1,29 +1,46 @@
 import React, { Component } from 'react';
 import TrackItem from './trackItem'
+import $ from 'jquery'
+import ApiRoutes from '../api_routes'
+
 class NewTrack extends Component {
 
   constructor(props){
     super(props)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.state = {errors: [], branches: [] }
+    this.apiRoutes = new ApiRoutes()
+
   }
   componentDidMount(){
       // get the branches from api and in success callback function set state
-      let branches = [{
-          id: '1',
-          name:'nasr city',
-          city: 'Cairo'
-        },{
-          id: '2',
-          name:'Mansoura ',
-          city: 'mansoura'
-        },{
-          id: '3',
-          name:'smart village',
-          city: 'Cairo'
+      // let branches = [{
+      //     id: '1',
+      //     name:'nasr city',
+      //     city: 'Cairo'
+      //   },{
+      //     id: '2',
+      //     name:'Mansoura ',
+      //     city: 'mansoura'
+      //   },{
+      //     id: '3',
+      //     name:'smart village',
+      //     city: 'Cairo'
+      //   },
+      // ]
+      var _this = this;
+      $.ajax({
+        url: this.apiRoutes.get_branches_route(),
+        method: "GET",
+        success: function(data){
+          _this.setState({branches: data})
+          console.log(data);
         },
-      ]
-      this.setState({branches: branches})
+        error: function(err){
+          console.log(err);
+        }
+      })
+      // this.setState({branches: branches})
   }
   render() {
 

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TrackItem from './trackItem'
 import {Link} from 'react-router'
+import $ from 'jquery'
+import ApiRoutes from '../api_routes'
+
 class Tracks extends Component {
 
   constructor(props){
@@ -9,25 +12,38 @@ class Tracks extends Component {
     this.addTrack = this.addTrack.bind(this)
     this.deleteListItem = this.deleteListItem.bind(this)
     this.state = {  tracks: []}
+    this.apiRoutes = new ApiRoutes()
+
   }
   componentDidMount(){
-    let tracks = [
-      {
-          id: '1',
-          name:'open source',
-          branch: 'nasr city'
-        },{
-          id: '2',
-          name:'cyber security ',
-          branch: 'mansoura'
-        },{
-          id: '3',
-          name:'Java',
-          branch: 'Smart Village'
-        }
-
-    ];
-    this.setState({tracks: tracks})
+    // let tracks = [
+    //   {
+    //       id: '1',
+    //       name:'open source',
+    //       branch: 'nasr city'
+    //     },{
+    //       id: '2',
+    //       name:'cyber security ',
+    //       branch: 'mansoura'
+    //     },{
+    //       id: '3',
+    //       name:'Java',
+    //       branch: 'Smart Village'
+    //     }
+    //
+    // ];
+    var _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_tracks_route(),
+      method: "GET",
+      success: function(data){
+        _this.setState({tracks: data})
+        // console.log(data);
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
   render() {
 
@@ -59,7 +75,17 @@ class Tracks extends Component {
   deleteTrack(id){
     if (confirm('Are you sure you want to delete this item ?')) {
         // make ajax to api and in success perform deleteListItem
-        this.deleteListItem(id)
+        var _this = this;
+        $.ajax({
+          url: this.apiRoutes.get_tracks_route()+"/"+id,
+          method: 'DELETE',
+          success: function(resp){
+            _this.deleteListItem(id)
+          },
+          error: function(err){
+            console.log(err);
+          }
+        })
     }
   }
   deleteListItem(id){
@@ -73,11 +99,28 @@ class Tracks extends Component {
     }
     this.setState({tracks: tracks})
   }
+
+  // add track
   addTrack(track){
-      console.log(track);
-      let tracks = this.state.tracks ;
-      tracks.push(track)
-      this.setState({tracks: tracks})
+    var _this = this ;
+    $.ajax({
+      url: this.apiRoutes.get_tracks_route(),
+      method:'POST',
+      data: {name: track.name, branch_id: track.branch},
+      success: function(resp){
+        console.log(resp);
+        _this.addTrackItem(track)
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
+  }
+  addTrackItem(track){
+    console.log(track);
+    let tracks = this.state.tracks ;
+    tracks.push(track)
+    this.setState({tracks: tracks})
   }
 }
 

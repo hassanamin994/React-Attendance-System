@@ -6,6 +6,7 @@ import Tracks from './AdminPanel/tracks/list.js'
 import NewTrack from './AdminPanel/tracks/new.js'
 import Branches from './AdminPanel/branches/list.js'
 import NewBranch from './AdminPanel/branches/new.js'
+import EditBranch from './AdminPanel/branches/edit.js'
 import { Router, Route, browserHistory } from 'react-router'
 import Students from './AdminPanel/students/list'
 import NewStudent from './AdminPanel/students/new'
@@ -24,6 +25,7 @@ let routes = (
 
           <Route path="/branches" component={Branches} >
             <Route path="new" component={NewBranch} />
+            <Route path="edit/:id" component={EditBranch} />
           </Route>
 
           <Route path="/students" component={Students} >
