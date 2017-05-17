@@ -9,21 +9,26 @@ class LeaveItem extends Component {
   render() {
     let actions = [] ;
     let status = this.props.leave.status ;
-    if(status == "Pending" ){
+    let leaveStatus = "" ;
+    if(status == 1 ){
+      leaveStatus = "Pending"
       actions.push( <a style={{marginRight: '10px'}} onClick={this.approveLeave} href="#" className="btn btn-primary btn-xs">Approve</a> )
       actions.push( <a href="#" onClick={this.declineLeave} className="btn btn-danger btn-xs" >Decline</a> );
-    }else if (status == "Approved") {
+    }else if (status == 2) {
+      leaveStatus = "Approved"
       actions.push( <a href="#" onClick={this.declineLeave} className="btn btn-danger btn-xs" >Decline</a> );
-    }else if (status == "Declined") {
+    }else if (status == 3) {
+      leaveStatus = "Declined"
       actions.push( <a onClick={this.approveLeave} href="#" className="btn btn-primary btn-xs">Approve</a> )
     }
 
     return (
       <tr>
-        <td>{this.props.leave.student_name}</td>
+        <td>{this.props.leave.user.name}</td>
+        <td>{this.props.leave.user.track.name}</td>
         <td>{this.props.leave.date}</td>
-        <td>{this.props.leave.leave_body}</td>
-        <td>{this.props.leave.status}</td>
+        <td>{this.props.leave.body}</td>
+        <td>{leaveStatus}</td>
         <td>{ actions }</td>
       </tr>
     );

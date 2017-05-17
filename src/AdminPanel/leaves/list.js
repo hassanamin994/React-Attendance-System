@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import LeaveItem from './leaveItem'
 import {Link} from 'react-router'
+import ApiRoutes from '../api_routes'
+import $ from 'jquery'
+
 class Leaves extends Component {
 
   constructor(props){
@@ -9,32 +12,45 @@ class Leaves extends Component {
     this.declineLeave = this.declineLeave.bind(this)
     this.alterLeaveStatus = this.alterLeaveStatus.bind(this)
     this.state = {  leaves: []}
+    this.apiRoutes = new ApiRoutes()
   }
   componentDidMount(){
-    let leaves = [
-        {
-          id: 1,
-          student_name: 'hassan',
-          date:'2017/4/22',
-          status: 'Declined',
-          leave_body: 'i need a leave to go to the hospital'
-        },
-        {
-          id: 2,
-          student_name: 'kazafy',
-          date:'2017/4/22',
-          status: 'Pending',
-          leave_body: 'i need a leave to go to the hospital'
-        },
-        {
-          id: 3,
-          student_name: 'habib',
-          date:'2017/4/22',
-          status: 'Approved',
-          leave_body: 'i need a leave to go to the hospital'
-        },
-    ];
-    this.setState({leaves: leaves})
+    // let leaves = [
+    //     {
+    //       id: 1,
+    //       student: {name: 'hassan', track:{name: "Open Source"}},
+    //       date:'2017/4/22',
+    //       status: 3,
+    //       body: 'i need a leave to go to the hospital'
+    //     },
+    //     {
+    //       id: 2,
+    //       student: {name: 'hassan', track:{name: "Open Source"}},
+    //       date:'2017/4/22',
+    //       status: 1,
+    //       body: 'i need a leave to go to the hospital'
+    //     },
+    //     {
+    //       id: 3,
+    //       student: {name: 'hassan', track:{name: "Open Source"}},
+    //       date:'2017/4/22',
+    //       status: 2,
+    //       body: 'i need a leave to go to the hospital'
+    //     },
+    // ];
+    let _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_leaves_route(),
+      method: "GET",
+      success: function(data){
+        console.log(data);
+        _this.setState({leaves: data})
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
+    // this.setState({leaves: leaves})
   }
   render() {
 
@@ -48,6 +64,7 @@ class Leaves extends Component {
           <thead>
             <tr>
               <th>Student Name</th>
+              <th>Track</th>
               <th>Date</th>
               <th>Leave Notice</th>
               <th>Status</th>
@@ -66,12 +83,37 @@ class Leaves extends Component {
 
   approveLeave(id){
     // after ajax request alter the state
-    this.alterLeaveStatus(id, 'Approved')
+    console.log(id);
+    let _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_leaves_route()+"/"+id,
+      method: "PUT",
+      data: {status: 2},
+      success: function(data){
+        console.log(data);
+        _this.alterLeaveStatus(id, 2)
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
 
   declineLeave(id){
     // after ajax request alter the state
-    this.alterLeaveStatus(id, 'Declined')
+    let _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_leaves_route()+"/"+id,
+      method: "PUT",
+      data: {status: 3},
+      success: function(data){
+        console.log(data);
+        _this.alterLeaveStatus(id, 3)
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
 
   alterLeaveStatus(id, status){
