@@ -3,6 +3,7 @@ import BranchItem from './branchItem'
 import {Link} from 'react-router'
 import $ from 'jquery'
 import ApiRoutes from '../api_routes'
+import Authentication from '../../authentication'
 
 
 class Branches extends Component {
@@ -15,12 +16,15 @@ class Branches extends Component {
     this.editListItem = this.editListItem.bind(this)
     this.state = {  branches: []}
     this.apiRoutes = new ApiRoutes()
+    this.auth = new Authentication()
+
   }
   componentDidMount(){
     var _this = this;
     $.ajax({
       url: this.apiRoutes.get_branches_route(),
       method: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       success: function(data){
         // console.log(data);
         _this.setState({branches: data})
@@ -59,13 +63,15 @@ class Branches extends Component {
 
   addBranch(branch){
     console.log(branch);
+    let _this = this ;
     $.ajax({
       url: this.apiRoutes.get_branches_route(),
       method: 'POST',
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       data: {name: branch.name, city: branch.city},
       success: function(resp){
-            // self.addBranchItem(branch)
-            console.log('added');
+            _this.addBranchItem(resp)
+            console.log(resp, 'branch added');
       },
       error: function(err){
         console.log(err);
@@ -103,6 +109,7 @@ class Branches extends Component {
         $.ajax({
           url: this.apiRoutes.get_branches_route()+"/"+id,
           method: 'DELETE',
+          beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
           success: function(resp){
             console.log(resp);
             _this.deleteListItem(id)
