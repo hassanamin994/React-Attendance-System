@@ -11,5 +11,8 @@ export default class ApiRoutes {
   get_leaves_route(){
     return 'http://attendance-ionic-symfony-react.herokuapp.com/requests'
   }
+  get_login_route(){
+    return 'http://attendance-ionic-symfony-react.herokuapp.com/login'
+  }
 
 }
