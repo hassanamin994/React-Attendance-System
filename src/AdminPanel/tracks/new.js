@@ -3,7 +3,9 @@ import TrackItem from './trackItem'
 import $ from 'jquery'
 import ApiRoutes from '../api_routes'
 import Authentication from '../../authentication'
-
+// import {Datetime} from 'react-datatime'
+import Datetime from "react-datetime";
+require('react-datetime');
 class NewTrack extends Component {
 
   constructor(props){
@@ -42,6 +44,12 @@ class NewTrack extends Component {
           </div>
         </div>
         <div className='form-group'>
+          <label for="name" className="col-xs-2" >Attendance Time </label>
+          <div className="col-xs-10">
+            <Datetime  ref="date" />
+          </div>
+        </div>
+        <div className='form-group'>
           <label for="name" className="col-xs-2" >Branch </label>
           <div className="col-xs-10">
             <select className="form-control"  ref="branch">
@@ -62,6 +70,7 @@ class NewTrack extends Component {
   handleFormSubmit(e){
     e.preventDefault();
     // if form valid, submit it
+    let attendaceTime = document.getElementsByClassName('rdt')[0].getElementsByTagName('input')[0].value;
     let errors = [];
     let name = this.refs.name.value.trim();
     let branch = this.refs.branch.value.trim();
@@ -71,13 +80,16 @@ class NewTrack extends Component {
     if(!branch){ // else prompt for an error
       errors.push('Please fill the Branch field')
     }
+    if(!attendaceTime){ // else prompt for an error
+      errors.push('Please fill the Attendance time field')
+    }
     if(errors.length > 0 )
       this.setState({errors: errors})
     else {
       // push to the API
       console.log('form is valid');
       // in callback, get the new track id and branch name then push to the parent
-      this.props.addTrack({id: Math.random() * 100, name: name, branch: branch})
+      this.props.addTrack({id: Math.random() * 100, name: name, branch: branch, attendaceTime: attendaceTime})
     }
 
   }

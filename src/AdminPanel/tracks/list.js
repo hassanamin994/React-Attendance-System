@@ -95,7 +95,7 @@ class Tracks extends Component {
     $.ajax({
       url: this.apiRoutes.get_tracks_route(),
       method:'POST',
-      data: {name: track.name, branch_id: track.branch},
+      data: {name: track.name, branch_id: track.branch, attendaceTime: track.attendaceTime},
       beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       success: function(resp){
         console.log(resp, 'track added');
