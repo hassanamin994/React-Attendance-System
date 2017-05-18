@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import ApiRoutes from '../api_routes'
 import $ from 'jquery'
+import Authentication from '../../authentication'
 
 class NewStudent extends Component {
   constructor(props){
@@ -9,6 +10,7 @@ class NewStudent extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.state = {errors: [], tracks: []}
     this.apiRoutes = new ApiRoutes()
+    this.auth = new Authentication()
 
   }
   componentDidMount(){
@@ -31,6 +33,7 @@ class NewStudent extends Component {
     $.ajax({
       url: this.apiRoutes.get_tracks_route(),
       method: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       success: function(data){
         _this.setState({tracks: data})
         console.log(data);

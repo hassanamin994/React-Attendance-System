@@ -3,6 +3,7 @@ import Student from './student'
 import {Link} from 'react-router'
 import ApiRoutes from '../api_routes'
 import $ from 'jquery'
+import Authentication from '../../authentication'
 
 class Students extends Component {
 
@@ -12,6 +13,8 @@ class Students extends Component {
     this.addStudent = this.addStudent.bind(this)
     this.state = {  students: []}
     this.apiRoutes = new ApiRoutes()
+    this.auth = new Authentication()
+
   }
   componentDidMount(){
     // let students = [
@@ -37,6 +40,7 @@ class Students extends Component {
     $.ajax({
       url: this.apiRoutes.get_students_route(),
       method: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       success: function(data){
         console.log(data);
         // _this.setState({tracks: data})
@@ -80,6 +84,7 @@ class Students extends Component {
       $.ajax({
         url: this.apiRoutes.get_students_route()+"/"+id,
         method: 'DELETE',
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
         success: function(resp){
           console.log(resp);
           _this.deleteListItem(id)
@@ -106,6 +111,7 @@ class Students extends Component {
     $.ajax({
       url: this.apiRoutes.get_students_route(),
       method: 'POST',
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       data: student,
       success: function(data){
         console.log(data);
