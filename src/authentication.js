@@ -16,6 +16,6 @@ export default class Authentication{
 
   }
   isLoggedIn(){
-
+    return localStorage.getItem('access_token') && localStorage.getItem('access_token').length > 700
   }
 }

@@ -10,7 +10,12 @@ class LoginComponent extends Component {
     super(props);
     this.state = {errors: []}
     this.apiRoutes = new ApiRoutes()
-
+    this.auth = new Authentication()
+  }
+  componentWillMount(){
+    if(this.auth.isLoggedIn()){
+      browserHistory.push('/tracks')
+    }
   }
   render() {
     return (
@@ -38,10 +43,10 @@ class LoginComponent extends Component {
     e.preventDefault();
     let username = this.refs.username.value;
     let password = this.refs.password.value;
-    let auth = new Authentication()
+
 
     let _this = this;
-    auth.login(username, password)
+    this.auth.login(username, password)
       .done(function(resp){
         console.log(resp.token);
         localStorage.setItem('access_token',resp.token)

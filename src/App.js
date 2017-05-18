@@ -2,9 +2,31 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Link} from 'react-router'
+import Authentication from './authentication'
 
 class App extends Component {
+
   render() {
+    let auth = new Authentication()
+    let links = []
+    if(auth.isLoggedIn()){
+      links = (
+        <ul role="nav" className="nav navbar-nav navbar-right">
+          <li><Link to="/students" activeStyle={ {color: 'white' }} >Students</Link></li>
+          <li><Link to="/tracks" activeStyle={ {color: 'white' }} >Tracks</Link></li>
+          <li><Link to="/branches" activeStyle={ {color: 'white' }} >Branches</Link></li>
+          <li><Link to="/leaves" activeStyle={ {color: 'white' }} >Leaves</Link></li>
+          <li><Link to="/roles" activeStyle={ {color: 'white' }}>Attendence Roles</Link></li>
+          <li><Link to="/logout" activeStyle={ {color: 'white' }}>Logout</Link></li>
+        </ul>
+        )
+    }else{
+      links = (
+          <ul role="nav" className="nav navbar-nav navbar-right">
+            <li><Link to="/login" activeStyle={ {color: 'white' }}>Login</Link></li>
+          </ul>
+      )
+    }
     return (
       <div className="App">
         <nav className="navbar navbar-inverse">
@@ -20,13 +42,7 @@ class App extends Component {
               <a className="navbar-brand" href="#">Attendeka</a>
             </div>
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul role="nav" className="nav navbar-nav navbar-right">
-                <li><Link to="/students" activeStyle={ {color: 'white' }} >Students</Link></li>
-                <li><Link to="/tracks" activeStyle={ {color: 'white' }} >Tracks</Link></li>
-                <li><Link to="/branches" activeStyle={ {color: 'white' }} >Branches</Link></li>
-                <li><Link to="/leaves" activeStyle={ {color: 'white' }} >Leaves</Link></li>
-                <li><Link to="/roles">Attendence Roles</Link></li>
-              </ul>
+              {links}
             </div>
           </div>
         </nav>
