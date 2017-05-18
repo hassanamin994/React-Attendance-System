@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Link} from 'react-router'
 import Authentication from './authentication'
-
+import {browserHistory} from 'react-router'
 class App extends Component {
 
   render() {
@@ -26,7 +26,12 @@ class App extends Component {
             <li><Link to="/login" activeStyle={ {color: 'white' }}>Login</Link></li>
           </ul>
       )
+      if(this.props.location.pathname != "/login"){
+        browserHistory.push('/login')
+      }
     }
+    console.log(this.props.location.pathname);
+
     return (
       <div className="App">
         <nav className="navbar navbar-inverse">

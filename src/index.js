@@ -15,12 +15,14 @@ import Roles from './AdminPanel/attendance_roles/list'
 import NewRole from './AdminPanel/attendance_roles/new'
 import Leaves from './AdminPanel/leaves/list'
 import LoginComponent from './AdminPanel/login-component'
+import LogoutComponent from './AdminPanel/logout-component'
 
 let routes = (
   <Router history={browserHistory} >
     <Route path="/" component={App} >
 
           <Route path="/login" component={LoginComponent} />
+          <Route path="/logout" component={LogoutComponent} />
 
           <Route path="/tracks" component={Tracks} >
             <Route path="new" component={NewTrack} />

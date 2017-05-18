@@ -13,9 +13,12 @@ export default class Authentication{
     })
   }
   logout(){
-
+    localStorage.removeItem('access_token')
   }
   isLoggedIn(){
     return localStorage.getItem('access_token') && localStorage.getItem('access_token').length > 700
+  }
+  get_access_token(){
+    return localStorage.getItem('access_token')
   }
 }
