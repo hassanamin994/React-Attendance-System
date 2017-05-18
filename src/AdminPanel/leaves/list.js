@@ -3,6 +3,7 @@ import LeaveItem from './leaveItem'
 import {Link} from 'react-router'
 import ApiRoutes from '../api_routes'
 import $ from 'jquery'
+import Authentication from '../../authentication'
 
 class Leaves extends Component {
 
@@ -13,35 +14,14 @@ class Leaves extends Component {
     this.alterLeaveStatus = this.alterLeaveStatus.bind(this)
     this.state = {  leaves: []}
     this.apiRoutes = new ApiRoutes()
+    this.auth = new Authentication()
   }
   componentDidMount(){
-    // let leaves = [
-    //     {
-    //       id: 1,
-    //       student: {name: 'hassan', track:{name: "Open Source"}},
-    //       date:'2017/4/22',
-    //       status: 3,
-    //       body: 'i need a leave to go to the hospital'
-    //     },
-    //     {
-    //       id: 2,
-    //       student: {name: 'hassan', track:{name: "Open Source"}},
-    //       date:'2017/4/22',
-    //       status: 1,
-    //       body: 'i need a leave to go to the hospital'
-    //     },
-    //     {
-    //       id: 3,
-    //       student: {name: 'hassan', track:{name: "Open Source"}},
-    //       date:'2017/4/22',
-    //       status: 2,
-    //       body: 'i need a leave to go to the hospital'
-    //     },
-    // ];
     let _this = this;
     $.ajax({
       url: this.apiRoutes.get_leaves_route(),
       method: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       success: function(data){
         console.log(data);
         _this.setState({leaves: data})
@@ -88,6 +68,7 @@ class Leaves extends Component {
     $.ajax({
       url: this.apiRoutes.get_leaves_route()+"/"+id,
       method: "PUT",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       data: {status: 2},
       success: function(data){
         console.log(data);
@@ -105,6 +86,7 @@ class Leaves extends Component {
     $.ajax({
       url: this.apiRoutes.get_leaves_route()+"/"+id,
       method: "PUT",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
       data: {status: 3},
       success: function(data){
         console.log(data);
