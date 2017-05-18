@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
 import Role from './role'
 import {Link} from 'react-router'
+import ApiRoutes from '../api_routes'
+import Authentication from '../../authentication'
+import $ from 'jquery'
 class Roles extends Component {
 
   constructor(props){
     super(props)
     this.deleteRole = this.deleteRole.bind(this)
     this.addRole = this.addRole.bind(this)
-    this.state = {  roles: [{
-        id: '1',
-        name:'role 1',
-        weight: '3'
-      },{
-        id: '2',
-        name:'role 2 ',
-        weight: '4'
-      },{
-        id: '3',
-        name:'role 3',
-        weight: '5'
+    this.apiRoutes = new ApiRoutes()
+    this.auth = new Authentication()
+    this.state = {  roles: []}
+  }
+  componentDidMount(){
+    var _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_roles_route(),
+      method: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
+      success: function(data){
+        console.log(data);
+        _this.setState({roles: data})
       },
-    ]}
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
   render() {
     let roles = this.state.roles.map((role) => {return <Role key={role.id} deleteRole={this.deleteRole} role={role} />} )
@@ -49,7 +56,19 @@ class Roles extends Component {
   deleteRole(id){
     if (confirm('Are you sure you want to delete this item ?')) {
       // make ajax to api and in success perform deleteListItem
-      this.deleteListItem(id)
+        var _this = this;
+        $.ajax({
+          url: this.apiRoutes.get_roles_route()+"/"+id,
+          method: 'DELETE',
+          beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
+          success: function(resp){
+            console.log(resp);
+            _this.deleteListItem(id)
+          },
+          error: function(err){
+            console.log(err);
+          }
+        })
     }
   }
   deleteListItem(id){
@@ -65,11 +84,28 @@ class Roles extends Component {
   }
 
 
-  addRole(role){
-      console.log(role);
+  addRoleItem(role){
+      console.log(role, 'add to list roles');
       let roles = this.state.roles ;
       roles.push(role)
       this.setState({roles: roles})
+  }
+  addRole(role){
+    console.log(role, 'adding before ajax');
+    let _this = this ;
+    $.ajax({
+      url: this.apiRoutes.get_roles_route(),
+      method: 'POST',
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
+      data: role,
+      success: function(resp){
+            _this.addRoleItem(resp)
+            console.log(resp, 'role added');
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
 }
 

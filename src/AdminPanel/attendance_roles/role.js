@@ -8,8 +8,8 @@ class Role extends Component {
   render() {
     return (
       <tr>
-        <td>{this.props.role.name}</td>
-        <td>{this.props.role.weight}</td>
+        <td>{this.props.role.minutes}</td>
+        <td>{this.props.role.marks}</td>
         <td><a onClick={this.deleteRole} className="btn btn-danger btn-xs" href="#">Delete</a>  <a href="#" className="btn btn-primary btn-xs" >Edit</a></td>
       </tr>
     );

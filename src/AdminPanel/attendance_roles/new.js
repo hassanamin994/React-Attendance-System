@@ -14,15 +14,15 @@ class NewRole extends Component {
       <form className="form-horizontal" onSubmit={this.handleFormSubmit} >
        <h2> Add Role </h2>
         <div className='form-group'>
-          <label for="name" className="col-xs-2" >Role Name </label>
+          <label for="name" className="col-xs-2" >Minutes </label>
           <div className="col-xs-10">
-            <input type="text" id="role-name" className="form-control"  ref="name"  />
+            <input type="number" id="role-name" className="form-control"  ref="minutes"  />
           </div>
         </div>
         <div className='form-group'>
-          <label for="name" className="col-xs-2" >Role Weight </label>
+          <label for="name" className="col-xs-2" >Marks </label>
           <div className="col-xs-10">
-            <input type="text" id="role-name" className="form-control"  ref="weight"  />
+            <input type="number" id="role-name" className="form-control"  ref="marks"  />
           </div>
         </div>
         <div className="error" hidden={this.state.errors.length == 0 }>
@@ -39,20 +39,20 @@ class NewRole extends Component {
     e.preventDefault();
     // if form valid, submit it
     let errors = [];
-    let name = this.refs.name.value.trim();
-    let weight = this.refs.weight.value.trim();
-    if(!name){
-      errors.push('Please fill the Name field')
+    let minutes = this.refs.minutes.value.trim();
+    let marks = this.refs.marks.value.trim();
+    if(!minutes){
+      errors.push('Please fill the Minutes field')
     }
-    if(!weight){ // else prompt for an error
-      errors.push('Please fill the Weight field')
+    if(!marks){ // else prompt for an error
+      errors.push('Please fill the Marks field')
     }
     if(errors.length > 0 )
       this.setState({errors: errors})
     else {
       // push to the API
       console.log('form is valid');
-      this.props.addRole({id: Math.random()*100, name: name, weight: weight})
+      this.props.addRole({minutes: minutes, marks: marks})
     }
 
   }
