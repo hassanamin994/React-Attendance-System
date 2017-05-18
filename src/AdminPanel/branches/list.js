@@ -13,6 +13,7 @@ class Branches extends Component {
     this.deleteBranch = this.deleteBranch.bind(this)
     this.addBranch = this.addBranch.bind(this)
     this.addBranchItem = this.addBranchItem.bind(this)
+    this.editBranch = this.editBranch.bind(this)
     this.editListItem = this.editListItem.bind(this)
     this.state = {  branches: []}
     this.apiRoutes = new ApiRoutes()
@@ -86,9 +87,20 @@ class Branches extends Component {
 
   editBranch(branch){
     // send ajax with the edits
-
-    // in callback set the new branch data to state
-    this.editListItem(branch)
+    let  _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_branches_route()+"/"+branch.id,
+      method: 'PUT',
+      data: {name: branch.name, city: branch.city },
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
+      success: function(resp){
+        console.log(resp, 'track edited');
+        _this.editListItem(resp)
+      },
+      error: function(err){
+        console.log(err);
+      }
+    })
   }
 
   editListItem(branch){
