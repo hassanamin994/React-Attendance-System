@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TrackItem from './trackItem'
 import $ from 'jquery'
 import ApiRoutes from '../api_routes'
+import Authentication from '../../authentication'
 
 class NewTrack extends Component {
 
@@ -10,28 +11,14 @@ class NewTrack extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.state = {errors: [], branches: [] }
     this.apiRoutes = new ApiRoutes()
-
+    this.auth = new Authentication()
   }
   componentDidMount(){
-      // get the branches from api and in success callback function set state
-      // let branches = [{
-      //     id: '1',
-      //     name:'nasr city',
-      //     city: 'Cairo'
-      //   },{
-      //     id: '2',
-      //     name:'Mansoura ',
-      //     city: 'mansoura'
-      //   },{
-      //     id: '3',
-      //     name:'smart village',
-      //     city: 'Cairo'
-      //   },
-      // ]
       var _this = this;
       $.ajax({
         url: this.apiRoutes.get_branches_route(),
         method: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
         success: function(data){
           _this.setState({branches: data})
           console.log(data);
@@ -40,7 +27,6 @@ class NewTrack extends Component {
           console.log(err);
         }
       })
-      // this.setState({branches: branches})
   }
   render() {
 

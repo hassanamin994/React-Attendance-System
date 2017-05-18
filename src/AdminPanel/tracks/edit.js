@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TrackItem from './trackItem'
 import $ from 'jquery'
 import ApiRoutes from '../api_routes'
+import Authentication from '../../authentication'
 
 class EditTrack extends Component {
 
@@ -10,8 +11,10 @@ class EditTrack extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.handleTracknameChange = this.handleTracknameChange.bind(this)
     this.handleBrancheChange = this.handleBrancheChange.bind(this)
+    this.updateTrack = this.updateTrack.bind(this)
     this.state = {errors: [], branches: [], track: {} }
     this.apiRoutes = new ApiRoutes()
+    this.auth = new Authentication()
 
   }
   componentWillMount(){
@@ -20,6 +23,7 @@ class EditTrack extends Component {
       $.ajax({
         url: this.apiRoutes.get_branches_route(),
         method: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
         success: function(data){
           _this.setState({branches: data})
           console.log(data);
@@ -29,18 +33,25 @@ class EditTrack extends Component {
         }
       })
       // get the current track data
-      console.log('getting track data');
-      $.ajax({
-        url: this.apiRoutes.get_tracks_route()+"/"+_this.props.params.id,
-        method: "GET",
-        success: function(data){
-          _this.setState({track: data})
-          console.log(data, 'track data');
-        },
-        error: function(err){
-          console.log(err, 'errorrrrrrrrrrrrrrrrrrrrrrrrrrr');
-        }
-      })
+      this.updateTrack(this.props)
+  }
+  updateTrack(props){
+    let _this = this;
+    $.ajax({
+      url: this.apiRoutes.get_tracks_route()+"/"+props.params.id,
+      method: "GET",
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', "Bearer "+ _this.auth.get_access_token());},
+      success: function(data){
+        _this.setState({track: data})
+        console.log(data, 'track data');
+      },
+      error: function(err){
+        console.log(err, 'errorrrrrrrrrrrrrrrrrrrrrrrrrrr');
+      }
+    })
+  }
+  componentWillReceiveProps(nextProps){
+    this.updateTrack(nextProps);
   }
   render() {
 
