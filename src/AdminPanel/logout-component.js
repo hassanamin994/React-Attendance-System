@@ -21,25 +21,6 @@ class LogoutComponent extends Component {
   render() {
     return null;
   }
-  handleLogin(e){
-    e.preventDefault();
-    let username = this.refs.username.value;
-    let password = this.refs.password.value;
-
-
-    let _this = this;
-    this.auth.login(username, password)
-      .done(function(resp){
-        console.log(resp.token);
-        localStorage.setItem('access_token',resp.token)
-        browserHistory.push('/tracks')
-      }).fail(function(err){
-        let errors = _this.state.errors;
-        errors.push('Invalid username or password!')
-        _this.setState({errors: errors})
-      })
-
-  }
 }
 
 export default LogoutComponent;
